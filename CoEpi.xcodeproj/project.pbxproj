@@ -17,6 +17,7 @@
 		30EF955B2432E009007D61C7 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 30EF955A2432E009007D61C7 /* CryptoSwift */; };
 		30EF95612434E07B007D61C7 /* RxAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30EF95602434E07B007D61C7 /* RxAlamofire */; };
 		30EF956D24363115007D61C7 /* CoEpiNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EF956C24363115007D61C7 /* CoEpiNetworkingTests.swift */; };
+		4B20E42E2436D0E6003DD28F /* SMART in Frameworks */ = {isa = PBXBuildFile; productRef = 4B20E42D2436D0E6003DD28F /* SMART */; };
 		4B7FB337242DF0F9002EDE0A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4B7FB336242DF0F9002EDE0A /* Alamofire */; };
 		62B9A01A2433D2A200885519 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B9A0192433D2A200885519 /* DateFormatter.swift */; };
 		62B9A01F2434036A00885519 /* DebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8486BDD5242BA28C00A63DD5 /* DebugViewModel.swift */; };
@@ -261,6 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B20E42E2436D0E6003DD28F /* SMART in Frameworks */,
 				4B7FB337242DF0F9002EDE0A /* Alamofire in Frameworks */,
 				84A4B9A9242CA4D500516F3B /* RealmSwift in Frameworks */,
 				84A4B9A7242CA4D500516F3B /* Realm in Frameworks */,
@@ -679,6 +681,7 @@
 				4B7FB336242DF0F9002EDE0A /* Alamofire */,
 				30EF95602434E07B007D61C7 /* RxAlamofire */,
 				30EF955A2432E009007D61C7 /* CryptoSwift */,
+				4B20E42D2436D0E6003DD28F /* SMART */,
 			);
 			productName = CoEpi;
 			productReference = 849DFE622427D3750008ED65 /* CoEpi.app */;
@@ -766,6 +769,7 @@
 				4B7FB335242DF0F9002EDE0A /* XCRemoteSwiftPackageReference "Alamofire" */,
 				30EF955F2434E07B007D61C7 /* XCRemoteSwiftPackageReference "RxAlamofire" */,
 				30EF95592432E009007D61C7 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				4B20E42C2436D0E6003DD28F /* XCRemoteSwiftPackageReference "Swift-SMART" */,
 			);
 			productRefGroup = 849DFE632427D3750008ED65 /* Products */;
 			projectDirPath = "";
@@ -1470,6 +1474,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		4B20E42C2436D0E6003DD28F /* XCRemoteSwiftPackageReference "Swift-SMART" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/smart-on-fhir/Swift-SMART.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
 		4B7FB335242DF0F9002EDE0A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1514,6 +1526,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30EF955F2434E07B007D61C7 /* XCRemoteSwiftPackageReference "RxAlamofire" */;
 			productName = RxAlamofire;
+		};
+		4B20E42D2436D0E6003DD28F /* SMART */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B20E42C2436D0E6003DD28F /* XCRemoteSwiftPackageReference "Swift-SMART" */;
+			productName = SMART;
 		};
 		4B7FB336242DF0F9002EDE0A /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
