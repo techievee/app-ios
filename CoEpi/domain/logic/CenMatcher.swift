@@ -34,8 +34,6 @@ class CenMatcherImpl: CenMatcher {
         var possibleCENs: [String] = []
         possibleCENs.reserveCapacity(max)
 
-        let CENKeyLifetimeInSeconds = 7*86400 // every 7 days a new key is generated
-
         for i in 0...max {
             let ts = maxTimestamp - Int64(CENLifetimeInSeconds * i)
             let cen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: ts)
