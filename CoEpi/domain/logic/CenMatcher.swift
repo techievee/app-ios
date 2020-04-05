@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 protocol CenMatcher {
     func hasMatches(key: CENKey, maxTimestamp: Int64) -> Bool
@@ -40,6 +41,9 @@ class CenMatcherImpl: CenMatcher {
 //            possibleCENs[i] = cen.toHex()
             possibleCENs.append(cen.toHex()) // No fixed size array
         }
+
+        os_log("Generated results for key: %@, possible CENs: %@",
+               log: servicesLog, type: .debug, key.cenKey, "\(possibleCENs.count)")
 
         return cenRepo.match(start: minTimestamp, end: maxTimestamp, hexEncodedCENs: possibleCENs)
     }
