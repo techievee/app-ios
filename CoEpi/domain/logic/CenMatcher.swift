@@ -34,7 +34,7 @@ class CenMatcherImpl: CenMatcher {
 
         for i in 0...max {
             let ts = maxTimestamp - Int64(CENLifetimeInSeconds * i)
-            let cen = cenLogic.generateCen(CENKey: key.cenKey)
+            let cen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: ts)
 //            possibleCENs[i] = cen.toHex()
             possibleCENs.append(cen.toHex()) // No fixed size array
         }
