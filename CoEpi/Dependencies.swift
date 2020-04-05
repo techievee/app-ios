@@ -12,8 +12,8 @@ class Dependencies {
         registerRepos(container: container)
         registerServices(container: container)
         registerNetworking(container: container)
-        registerWiring(container: container)
         registerBle(container: container)
+        registerWiring(container: container)
 
         return container
     }
@@ -73,6 +73,7 @@ class Dependencies {
 
         // .eagerSingleton appears not to work. Triggering initialization.
         let _: CoEpiRepo = try! container.resolve()
+        let _: ScannedCensHandler = try! container.resolve()
     }
 
     private func registerBle(container: DependencyContainer) {
