@@ -19,13 +19,17 @@ class CenMatcherImpl: CenMatcher {
 
     // Copied from Android implementation
     private func match(key: CENKey, maxTimestamp: Int64) -> [CEN] {
+
+        // Unclear why maxTimestamp is a parameter
+        let maxTimestamp = Date().coEpiTimestamp
+        
         // take the last 7 days of timestamps and generate all the possible CENs (e.g. 7 days) TODO: Parallelize this?
-        let minTimestamp: Int64 = maxTimestamp - 7*24*60
+        let minTimestamp: Int64 = maxTimestamp - 7*24*60*60
         var CENLifetimeInSeconds = 15*60   // every 15 mins a new CEN is generated
 
         // last time (unix timestamp) the CENKeys were requested
 
-        let max = Int(7*24*(Double(60)/Double(CENLifetimeInSeconds)))
+        let max = Int(Double(7*24*60*60)/Double(CENLifetimeInSeconds))
 
         var possibleCENs: [String] = []
         possibleCENs.reserveCapacity(max)
