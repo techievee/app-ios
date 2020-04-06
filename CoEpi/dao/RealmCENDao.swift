@@ -35,6 +35,17 @@ class RealmCENDao: CENDao, RealmDao {
             .filter(NSPredicate(format: "CEN IN %@", hexEncodedCENs))
             .map { CEN(CEN: $0.CEN, timestamp: $0.timestamp) }
     }
+    
+    func loadCensForTimeInterval(start: Int64, end: Int64) -> [CEN] {
+       
+        realm.objects(RealmCEN.self)
+            .filter("timestamp >= %d", start)
+            .filter("timestamp <= %d", end)
+            .compactMap { CEN(CEN: $0.CEN, timestamp: $0.timestamp)
+        }
+        
+       
+    }
 
     func loadAllCENRecords() -> [CEN]? {
         let DBCENObject = realm.objects(RealmCEN.self).sorted(byKeyPath: "timestamp", ascending: false)

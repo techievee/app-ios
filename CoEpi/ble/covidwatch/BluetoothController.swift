@@ -527,7 +527,7 @@ extension BluetoothController: CBCentralManagerDelegate {
                 if (isConnectable) {
                     self.peripheralsToWriteContactEventIdentifierTo.insert(peripheral)
                     // OR use reading. Both cases are handled.
-                    // self.peripheralsToReadContactEventIdentifierFrom.insert(peripheral)
+                    self.peripheralsToReadContactEventIdentifierFrom.insert(peripheral)
                     self.connectPeripheralsIfNeeded()
                 }
             }
@@ -850,10 +850,11 @@ extension BluetoothController: CBPeripheralDelegate {
                     )
                     if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
                         os_log(
-                            "Peripheral (uuid=%@ name='%@') writing value for characteristic=%@ for service=%@",
+                            "Peripheral (uuid=%@ name='%@') writing value(CEN)=%@ for characteristic=%@ for service=%@",
                             log: self.log,
                             peripheral.identifier.description,
                             peripheral.name ?? "",
+                            value.toHex(),
                             contactEventIdentifierCharacteristic.description,
                             service.description
                         )
@@ -889,11 +890,12 @@ extension BluetoothController: CBPeripheralDelegate {
         else {
             if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
                 os_log(
-                    "Peripheral (uuid=%@ name='%@') did update value=%{iec-bytes}d for characteristic=%@ for service=%@",
+                    "Peripheral (uuid=%@ name='%@') did update value=%{iec-bytes}d with CEN=%@ for characteristic=%@ for service=%@",
                     log: self.log,
                     peripheral.identifier.description,
                     peripheral.name ?? "",
                     characteristic.value?.count ?? 0,
+                    characteristic.value?.toHex() ?? "null",
                     characteristic.description,
                     characteristic.service.description
                 )
@@ -1162,9 +1164,10 @@ extension BluetoothController: CBPeripheralManagerDelegate {
 
         peripheral.respond(to: request, withResult: .success)
         os_log(
-            "Peripheral manager did respond to read request with result=%d",
+            "Peripheral manager did respond to read request with result status=%d and CEN=%@",
             log: self.log,
-            CBATTError.success.rawValue
+            CBATTError.success.rawValue,
+            value.toHex()
         )
     }
 

@@ -7,6 +7,8 @@ protocol CENRepo {
     func loadAllCENRecords() -> [CEN]?
 
     func match(start: Int64, end: Int64, hexEncodedCENs: [String]) -> [CEN]
+    
+    func
 }
 
 class CENRepoImpl: CENRepo {

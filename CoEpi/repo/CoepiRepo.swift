@@ -45,6 +45,8 @@ class CoEpiRepoImpl: CoEpiRepo {
             .do(onNext: { keys in
                  matchingStartTime = CFAbsoluteTimeGetCurrent()
                 os_log("Fetched keys from API (%d)", log: servicesLog, type: .debug, keys.count)
+                os_log("Fetched keys from API: %@", log: servicesLog, type: .debug, "\(keys.suffix(5))")
+
             })
 
 //            // Uncomment this to benchmark a few keys quickly...
@@ -53,13 +55,15 @@ class CoEpiRepoImpl: CoEpiRepo {
 //            })
 
             // Filter matching keys
-            .map { keys -> [CENKey] in keys.compactMap { key in
-                if (cenMatcher.hasMatches(key: key, maxTimestamp: CoEpiRepoImpl.lastCENKeysCheck)) {
-                    return key
-                } else {
-                    return nil
-                }
-            }}
+//            .map { keys -> [CENKey] in keys.compactMap { key in
+//                if (cenMatcher.hasMatches(key: key, maxTimestamp: CoEpiRepoImpl.lastCENKeysCheck)) {
+//                    return key
+//                } else {
+//                    return nil
+//                }
+//            }}
+            
+            .map{keys -> [CENKey] in cenMatcher.matchLocalFirst(keys, CoEpiRepoImpl.lastCENKeysCheck) }
 
             .do(onNext: { matchedKeys in
                 if let matchingStartTime = matchingStartTime {

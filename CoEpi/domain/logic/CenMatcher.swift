@@ -24,9 +24,16 @@ class CenMatcherImpl: CenMatcher {
         // Unclear why maxTimestamp is a parameter
         let maxTimestamp = Date().coEpiTimestamp
         
+        
         // take the last 7 days of timestamps and generate all the possible CENs (e.g. 7 days) TODO: Parallelize this?
         let minTimestamp: Int64 = maxTimestamp - 7*24*60*60
-        var CENLifetimeInSeconds = 15*60   // every 15 mins a new CEN is generated
+        let CENLifetimeInSeconds = 15*60   // every 15 mins a new CEN is generated
+        
+        let modulus = maxTimestamp % Int64(CENLifetimeInSeconds)
+        
+        let roundedMaxTimestamp = maxTimestamp - modulus
+        
+        os_log("Starting CEN calculation for maxTimestamp: %@, CENLifetimeInSeconds: %@, roundedMaxTimestamp: %@", log: servicesLog, type: .debug, "\(maxTimestamp)", "\(CENLifetimeInSeconds)", "\(roundedMaxTimestamp)")
 
         // last time (unix timestamp) the CENKeys were requested
 
@@ -47,4 +54,26 @@ class CenMatcherImpl: CenMatcher {
 
         return cenRepo.match(start: minTimestamp, end: maxTimestamp, hexEncodedCENs: possibleCENs)
     }
+    
+    func matchLocalFirst(keys: [CENKey], maxTimestamp: Int64) -> [CEN] {
+        var CENLifetimeInSeconds = 15*60   // every 15 mins a new CEN is generated
+        
+        let modulus = maxTimestamp % Int64(CENLifetimeInSeconds)
+        
+        let roundedMaxTimestamp = maxTimestamp - modulus
+        let minTimestamp: Int64 = roundedMaxTimestamp - 7*24*60*60
+        
+        
+        let localCens: [CEN] = cenRepo.loadAllCENRecords()   //loadCensForTimeInterval(start: minTimestamp, end: maxTimestamp)
+        print("num local cens = %@", localCens.count)
+        
+        for localCen in localCens {
+            print(localCen.timestamp)
+            let mod = localCen.timestamp % Int64(CENLifetimeInSeconds)
+            let roundedLocalTimestamp = localCen.timestamp - mod
+            
+        }
+    }
+    
+    
 }
