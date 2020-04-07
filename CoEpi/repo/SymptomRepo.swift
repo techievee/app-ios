@@ -41,6 +41,13 @@ private extension Sequence where Iterator.Element == Symptom {
 
     func toCENReport() -> CenReport {
         // TODO (has not been specified yet)
-        CenReport(id: "123", report: "TODO symptoms -> CENReport", timestamp: Date().coEpiTimestamp)
+        
+        var reportString : String = ""
+        
+        for symptom in self {
+            reportString.append(symptom.name + ", ")
+        }
+        
+        return CenReport(id: UUID().uuidString, report: reportString, timestamp: Date().coEpiTimestamp)
     }
 }

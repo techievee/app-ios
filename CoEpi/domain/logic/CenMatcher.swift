@@ -43,7 +43,7 @@ class CenMatcherImpl: CenMatcher {
             for key in keys {
                 let candidateCen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: roundedLocalTimestamp)
                 let candidateCenHex = candidateCen.toHex()
-                print("candidateCenHEx: [\(candidateCenHex)]")
+                print("candidateCenHEx: [\(candidateCenHex)] based on key [\(key.cenKey) \(key.timestamp)]")
                 if localCen.CEN == candidateCenHex {
                     print("match found for [\(candidateCenHex)]")
                     matchedKeys.append(key)
