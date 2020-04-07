@@ -27,6 +27,11 @@ final class AlamofireLogger: EventMonitor {
     }
 }
 
+struct ReportPayloadV3 : Codable{
+    let report: String
+    let cenKeys: [String]
+}
+
 class CoEpiNetworkingV3Tests: XCTestCase {
 
     override func setUp() {
@@ -40,7 +45,7 @@ class CoEpiNetworkingV3Tests: XCTestCase {
     func testExample() {
         //https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3
         /**
-         curl -X POST https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport -d '{ "report": "dWlyZSBhdXRob3JgdsF0aW9uLgo=", "cenKeys": [ "baz", "das" ]}'
+         curl -X POST https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport -d '{ "report": "dWlyZSBhdXRob3JgdsF0aW9uLgo=", "cenKeys": [ "baz1", "das1" ]}'
 
          curl -X GET https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport
          [{"did":"2020-04-06","reportTimestamp":1586157667433,"report":"dWlyZSBhdXRob3JpemF0aW9uLgo=","cenKeys":["bar","foo"]},{"did":"2020-04-06","reportTimestamp":1586158348099,"report":"dWlyZSBhdXRob3JpemF0aW9uLgo=","cenKeys":["bar","foo"]},{"did":"2020-04-06","reportTimestamp":1586158404001,"report":"dWlyZSBhdXRob3JgdsF0aW9uLgo=","cenKeys":["baz","das"]}]
@@ -48,30 +53,89 @@ class CoEpiNetworkingV3Tests: XCTestCase {
          */
     }
     
+    /**
+     Test Case '-[CoEpiNetworkingTests.CoEpiNetworkingV3Tests testV3getCenReport]' started.
+     2020-04-07 19:03:10.734795+0200 xctest[18155:13774196] ⚡️ Request Started: GET https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport
+     ⚡️ Body Data: None
+
+
+      Success value and JSON: (
+             {
+             cenKeys =         (
+                 baz1,
+                 das1
+             );
+             did = "2020-04-07";
+             report = "dWlyZSBhdXRob3JgdsF0aW9uLgo=";
+             reportTimestamp = 1586278840644;
+         }
+     )
+     Test Case '-[CoEpiNetworkingTests.CoEpiNetworkingV3Tests testV3getCenReport]' passed (22.335 seconds).
+     */
+    
     func testV3getCenReport() {
         
         let url: String = "https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport"
         let expect = expectation(description: "request complete")
-        
         let session = Session(eventMonitors: [ AlamofireLogger() ])
         
-        let request = session.request(url).responseJSON { response in
+        let _ = session.request(url).responseJSON { response in
             expect.fulfill()
-            guard let data = response.data else { return }
-            do {
-                print(data)
-//                let decoder = JSONDecoder()
+            switch response.result {
+            case .success(let JSON):
+                print("\n\n Success value and JSON: \(JSON)")
+                XCTAssertNotNil(JSON)
 
-            } catch let error {
-                print("Couldn't parse reponse: \(error), " +
-                        "data: \(String(describing: String(data: data, encoding: .utf8)))")
+            case .failure(let error):
+                print("\n\n Request failed with error: \(error)")
+                XCTFail()
             }
+            
         }
         
         waitForExpectations(timeout: 5)
 
                // Then
 //               XCTAssertNotNil(data)
+    }
+    
+    func testV3postCenReport() {
+        let url: String = "https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport"
+        let expect = expectation(description: "request complete")
+        let session = Session(eventMonitors: [ AlamofireLogger() ])
+        /**
+         { "report": "dWlyZSBhdXRob3JgdsF0aW9uLgo=", "cenKeys": [ "baz1", "das1" ]}
+         
+         Test Case '-[CoEpiNetworkingTests.CoEpiNetworkingV3Tests testV3postCenReport]' started.
+         2020-04-07 19:57:27.516859+0200 xctest[18521:13805023] ⚡️ Request Started: POST https://q69c4m2myb.execute-api.us-west-2.amazonaws.com/v3/cenreport
+         ⚡️ Body Data: {
+           "report" : "dWlyZSBhdXRob3JgdsF0aW9uLgo=",
+           "cenKeys" : [
+             "alpha",
+             "beta"
+           ]
+         }
+         Test Case '-[CoEpiNetworkingTests.CoEpiNetworkingV3Tests testV3postCenReport]' passed (0.583 seconds).
+         
+         */
+        
+        let params : ReportPayloadV3 = ReportPayloadV3(report: "dWlyZSBhdXRob3JgdsF0aW9uLgo=", cenKeys: ["alpha", "beta"])
+        
+        do {
+            let _ = session.request(url, method: HTTPMethod.post, parameters: params, encoder: JSONParameterEncoder.prettyPrinted).response { response in
+                switch response.result {
+                case .success:
+                    expect.fulfill()
+                case .failure(let error):
+                    print("\n\n Request failed with error: \(error)")
+                    XCTFail()
+                }
+                
+            }
+        }
+        
+        waitForExpectations(timeout: 5)
+        
     }
 
     func testPerformanceExample() {
