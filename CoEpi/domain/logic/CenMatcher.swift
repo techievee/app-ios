@@ -3,9 +3,11 @@ import os.log
 
 protocol CenMatcher {
     func hasMatches(key: CENKey, maxTimestamp: Int64) -> Bool
+    func matchLocalFirst(keys: [CENKey], maxTimestamp: Int64) -> [CENKey]
 }
 
 class CenMatcherImpl: CenMatcher {
+    
     private let cenRepo: CENRepo // TODO decouple from DB
     private let cenLogic: CenLogic
 
@@ -17,6 +19,42 @@ class CenMatcherImpl: CenMatcher {
     func hasMatches(key: CENKey, maxTimestamp: Int64) -> Bool {
         !match(key: key, maxTimestamp: maxTimestamp).isEmpty
     }
+    
+    func matchLocalFirst(keys: [CENKey], maxTimestamp: Int64) -> [CENKey] {
+        let CENLifetimeInSeconds = 15*60   // every 15 mins a new CEN is generated
+        
+        let modulus = maxTimestamp % Int64(CENLifetimeInSeconds)
+        
+        let roundedMaxTimestamp = maxTimestamp - modulus
+        let minTimestamp: Int64 = roundedMaxTimestamp - 7*24*60*60
+        
+        
+        let localCens: [CEN] = cenRepo.loadCensForTimeInterval(start: minTimestamp, end: maxTimestamp)
+        print("num local cens = %@", localCens.count)
+        
+        var matchedKeys : [CENKey] = []
+        
+        for localCen in localCens {
+            print(localCen.timestamp)
+            let mod = localCen.timestamp % Int64(CENLifetimeInSeconds)
+            let roundedLocalTimestamp = localCen.timestamp - mod
+            print("\(localCen.timestamp) -> \(roundedLocalTimestamp) [\(localCen.CEN)]")
+            
+            for key in keys {
+                let candidateCen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: roundedLocalTimestamp)
+                let candidateCenHex = candidateCen.toHex()
+                print("candidateCenHEx: [\(candidateCenHex)]")
+                if localCen.CEN == candidateCenHex {
+                    print("match found for [\(candidateCenHex)]")
+                    matchedKeys.append(key)
+                }
+                
+            }
+        }
+        
+        return matchedKeys
+    }
+    
 
     // Copied from Android implementation
     private func match(key: CENKey, maxTimestamp: Int64) -> [CEN] {
@@ -53,26 +91,6 @@ class CenMatcherImpl: CenMatcher {
                log: servicesLog, type: .debug, key.cenKey, "\(possibleCENs.count)")
 
         return cenRepo.match(start: minTimestamp, end: maxTimestamp, hexEncodedCENs: possibleCENs)
-    }
-    
-    func matchLocalFirst(keys: [CENKey], maxTimestamp: Int64) -> [CEN] {
-        var CENLifetimeInSeconds = 15*60   // every 15 mins a new CEN is generated
-        
-        let modulus = maxTimestamp % Int64(CENLifetimeInSeconds)
-        
-        let roundedMaxTimestamp = maxTimestamp - modulus
-        let minTimestamp: Int64 = roundedMaxTimestamp - 7*24*60*60
-        
-        
-        let localCens: [CEN] = cenRepo.loadAllCENRecords()   //loadCensForTimeInterval(start: minTimestamp, end: maxTimestamp)
-        print("num local cens = %@", localCens.count)
-        
-        for localCen in localCens {
-            print(localCen.timestamp)
-            let mod = localCen.timestamp % Int64(CENLifetimeInSeconds)
-            let roundedLocalTimestamp = localCen.timestamp - mod
-            
-        }
     }
     
     

@@ -5,6 +5,7 @@ protocol CENDao {
     func insert(cen: CEN) -> Bool
     func loadAllCENRecords() -> [CEN]?
     func match(start: Int64, end: Int64, hexEncodedCENs: [String]) -> [CEN]
+    func loadCensForTimeInterval(start: Int64, end: Int64) -> [CEN]
 }
 
 class RealmCENDao: CENDao, RealmDao {
