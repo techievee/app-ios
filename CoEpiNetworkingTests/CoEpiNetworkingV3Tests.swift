@@ -3,13 +3,13 @@
 //  CoEpiNetworkingTests
 //
 //  Created by Dusko Ojdanic on 4/7/20.
-//  Copyright © 2020 org.coepi. All rights reserved.
+//  Copyright © 2020 org.coepi. 
 //
 
 import XCTest
 import Foundation
 import Alamofire
-import RxBlocking
+
 //@testable import CoEpi
 
 final class AlamofireLogger: EventMonitor {
@@ -119,23 +119,52 @@ class CoEpiNetworkingV3Tests: XCTestCase {
          
          */
         
-        let params : ReportPayloadV3 = ReportPayloadV3(report: "dWlyZSBhdXRob3JgdsF0aW9uLgo=", cenKeys: ["alpha", "beta"])
-        
-        do {
-            let _ = session.request(url, method: HTTPMethod.post, parameters: params, encoder: JSONParameterEncoder.prettyPrinted).response { response in
-                switch response.result {
-                case .success:
-                    expect.fulfill()
-                case .failure(let error):
-                    print("\n\n Request failed with error: \(error)")
-                    XCTFail()
+        if let key1 = makeRandomCENKey(), let key2 = makeRandomCENKey(){
+            let params : ReportPayloadV3 = ReportPayloadV3(report: "dWlyZSBhdXRob3JgdsF0aW9uLgo=", cenKeys: [key1.cenKey, key2.cenKey])
+            
+            do {
+                let _ = session.request(url, method: HTTPMethod.post, parameters: params, encoder: JSONParameterEncoder.prettyPrinted).response { response in
+                    switch response.result {
+                    case .success:
+                        expect.fulfill()
+                    case .failure(let error):
+                        print("\n\n Request failed with error: \(error)")
+                        XCTFail()
+                    }
+                    
                 }
-                
             }
         }
         
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 15)
         
+    }
+    
+    func testCenLogic(){
+        let cenLogic = CenLogic()
+        
+        switch cenLogic.generateCenKey(curTimestamp: Date().coEpiTimestamp) {
+            case .success(let key):
+                let payload = ReportPayloadV3(report: "dWlyZSBhdXRob3JgdsF0aW9uLgo=", cenKeys: [key.cenKey])
+                print(payload)
+                XCTAssert(true)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+        }
+        
+    }
+    
+    private func makeRandomCENKey() -> CENKey? {
+        let cenLogic = CenLogic()
+        var generatedKey : CENKey?
+       switch cenLogic.generateCenKey(curTimestamp: Date().coEpiTimestamp) {
+           case .success(let key):
+               generatedKey = key
+           case .failure(let error):
+            fatalError(error.localizedDescription)
+       }
+        
+        return generatedKey
     }
 
     func testPerformanceExample() {
@@ -146,3 +175,4 @@ class CoEpiNetworkingV3Tests: XCTestCase {
     }
 
 }
+

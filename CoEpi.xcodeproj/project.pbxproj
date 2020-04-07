@@ -10,6 +10,11 @@
 		307E7727243C587000A4FC8A /* CoEpiNetworkingV3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307E7726243C587000A4FC8A /* CoEpiNetworkingV3Tests.swift */; };
 		307E7737243CA97400A4FC8A /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 307E7736243CA97400A4FC8A /* RxTest */; };
 		307E7739243CE74600A4FC8A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 307E7738243CE74600A4FC8A /* Alamofire */; };
+		307E773A243D0CA000A4FC8A /* CenLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB1162436056500BD1302 /* CenLogic.swift */; };
+		307E773B243D0CC100A4FC8A /* CENKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B7AC2243326FD00C42280 /* CENKey.swift */; };
+		307E773C243D0CD400A4FC8A /* Date+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A1C0CF2437BFE200875DAE /* Date+Convenience.swift */; };
+		307E773E243D0CFD00A4FC8A /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 307E773D243D0CFD00A4FC8A /* CryptoSwift */; };
+		307E773F243D16F500A4FC8A /* Data+StringFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8491497C2436881400975344 /* Data+StringFormatting.swift */; };
 		30EF94FB242CFC9F007D61C7 /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EF94F9242CFC9F007D61C7 /* AlertsViewController.swift */; };
 		30EF94FC242CFC9F007D61C7 /* AlertsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30EF94FA242CFC9F007D61C7 /* AlertsViewController.xib */; };
 		30EF952E24313F61007D61C7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EF952824313F61007D61C7 /* Fonts.swift */; };
@@ -286,6 +291,7 @@
 			files = (
 				B8D966C74B8325F17A9EEF37 /* Pods_CoEpiNetworkingTests.framework in Frameworks */,
 				307E7739243CE74600A4FC8A /* Alamofire in Frameworks */,
+				307E773E243D0CFD00A4FC8A /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,6 +780,7 @@
 			name = CoEpiNetworkingTests;
 			packageProductDependencies = (
 				307E7738243CE74600A4FC8A /* Alamofire */,
+				307E773D243D0CFD00A4FC8A /* CryptoSwift */,
 			);
 			productName = CoEpiNetworkingTests;
 			productReference = 30EF956A24363115007D61C7 /* CoEpiNetworkingTests.xctest */;
@@ -1086,7 +1093,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307E773B243D0CC100A4FC8A /* CENKey.swift in Sources */,
+				307E773F243D16F500A4FC8A /* Data+StringFormatting.swift in Sources */,
 				307E7727243C587000A4FC8A /* CoEpiNetworkingV3Tests.swift in Sources */,
+				307E773A243D0CA000A4FC8A /* CenLogic.swift in Sources */,
+				307E773C243D0CD400A4FC8A /* Date+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1670,6 +1681,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8484346F2438F6CA006A5839 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		307E773D243D0CFD00A4FC8A /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30EF95592432E009007D61C7 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
 		};
 		30EF955A2432E009007D61C7 /* CryptoSwift */ = {
 			isa = XCSwiftPackageProductDependency;

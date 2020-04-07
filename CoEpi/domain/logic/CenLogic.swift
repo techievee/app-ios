@@ -61,6 +61,7 @@ class CenLogic {
             SecRandomCopyBytes(kSecRandomDefault, keyDataCount, mutableBytes)
         }
         if result == errSecSuccess {
+            print("keyData: [\(keyData.toHex())]")
             return .success(keyData.base64EncodedString())
         } else {
             return .failure(.couldNotComputeKey)
