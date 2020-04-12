@@ -2,44 +2,68 @@ import CryptoKit
 import Foundation
 import RealmSwift
 import Security
+import RxSwift
 
 protocol CENKeyDao {
-    func generateAndStoreCENKey() -> CENKey
+    func generateAndStoreCENKey() -> Result<CENKey, DaoError>
     func insert(key: CENKey) -> Bool
     func getCENKeys(limit: Int64) -> [CENKey]
+
+    // For debug view
+    var generatedMyKey: ReplaySubject<String> { get }
 }
 
 class RealmCENKeyDao: RealmDao, CENKeyDao {
-    var realm: Realm
-
     private let cenLogic: CenLogic
 
+    let realmProvider: RealmProvider
+
+    let generatedMyKey: ReplaySubject<String> = .create(bufferSize: 1)
+
     init(realmProvider: RealmProvider, cenLogic: CenLogic) {
-        realm = realmProvider.realm
+        self.realmProvider = realmProvider
         self.cenLogic = cenLogic
     }
+ 
+    func generateAndStoreCENKey() -> Result<CENKey, DaoError> {
+        let curTimestamp = Date().coEpiTimestamp
 
-    func generateAndStoreCENKey() -> CENKey {
-        let curTimestamp = Int64(Date().timeIntervalSince1970)
+        let result: Result<CENKey, DaoError> = {
+            if let latestCenKey = getLatestCENKey() {
+                if (cenLogic.shouldGenerateNewCenKey(curTimestamp: curTimestamp, cenKeyTimestamp: latestCenKey.timestamp)) {
+                    return generateAndInsertCenKey(curTimestamp: curTimestamp)
 
-        if let latestCenKey = getLatestCENKey() {
-            if (cenLogic.shouldGenerateNewCenKey(curTimestamp: curTimestamp, cenKeyTimestamp: latestCenKey.timestamp)) {
+                } else {
+                    return .success(latestCenKey)
+                }
+            } else { // There's no latest CEN key
                 return generateAndInsertCenKey(curTimestamp: curTimestamp)
-
-            } else {
-                return latestCenKey
             }
-        } else { // There's no latest CEN key
-            return generateAndInsertCenKey(curTimestamp: curTimestamp)
+        }()
+
+        // Debugging
+        switch result {
+        case .success(let key): generatedMyKey.onNext(key.cenKey)
+        case .failure(_): break
+        }
+
+        return result
+    }
+
+
+    private func generateAndInsertCenKey(curTimestamp: Int64) -> Result<CENKey, DaoError> {
+        switch cenLogic.generateCenKey(curTimestamp: curTimestamp) {
+        case .success(let key):
+            _ = insert(key: key)
+            return .success(key)
+        case .failure(let error):
+            switch error {
+            case .couldNotComputeKey: return .failure(.couldNotComputeKey)
+            }
         }
     }
 
-    private func generateAndInsertCenKey(curTimestamp: Int64) -> CENKey {
-        let newCENKey = cenLogic.generateCenKey(curTimestamp: curTimestamp)
-        _ = insert(key: newCENKey)
-        return newCENKey
-    }
-
+    // TODO last n keys? for the reports?
     private func getLatestCENKey() -> CENKey? {
         let cenKeysObject = realm.objects(RealmCENKey.self).sorted(byKeyPath: "timestamp", ascending: false)
         if let lastCenKey = cenKeysObject.first {

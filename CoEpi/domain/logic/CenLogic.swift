@@ -3,31 +3,28 @@ import CryptoSwift
 import os.log
 
 class CenLogic {
-    private let CENKeyLifetimeInSeconds: Int64 = 2 * 60 // TODO: revert back to 7*86400
-    private let CENLifetimeInSeconds: Int64 = 1 * 60 // TODO: revert back to 15*60
+    private let CENKeyLifetimeInSeconds: Int64 = 7 * 86400
+    private let CENLifetimeInSeconds: Int64 = 15 * 60
 
     func shouldGenerateNewCenKey(curTimestamp: Int64, cenKeyTimestamp: Int64) -> Bool {
-         (cenKeyTimestamp == 0) || (roundedTimestamp(ts: curTimestamp) > roundedTimestamp(ts: cenKeyTimestamp))
+         (cenKeyTimestamp == 0) || (roundedTimestamp(ts: curTimestamp, roundingInterval: CENKeyLifetimeInSeconds) > roundedTimestamp(ts: cenKeyTimestamp, roundingInterval: CENKeyLifetimeInSeconds))
     }
 
-    func generateCenKey(curTimestamp: Int64) -> CENKey {
+    func generateCenKey(curTimestamp: Int64) -> Result<CENKey, CenLogicError> {
         //generate a new AES Key and store it in local storage
 
-        //generate base64string representation of key
+        //generate hex representation of key
         let cenKeyString = computeSymmetricKey()
-        let cenKeyTimestamp = curTimestamp
 
-        //Create CENKey and insert/save to Realm
-        let newCENKey = CENKey(cenKey: cenKeyString, timestamp: cenKeyTimestamp)
-        
-        return newCENKey
+        return cenKeyString.map {
+            CENKey(cenKey: $0, timestamp: curTimestamp)
+        }
     }
 
     // TODO ideally this should return Cen, not Data. Implement Cen <-> Data (separately)
-    func generateCen(CENKey: String) -> Data {
-        let currentTs : Int64 = Int64(Date().timeIntervalSince1970)
-        // decode the base64 encoded key
-        let decodedCENKey:Data = Data(base64Encoded: CENKey)!
+    func generateCen(CENKey: String, timestamp: Int64) -> Data {
+        // decode the hex encoded key
+        let decodedCENKey: Data = Data(hex: CENKey)
 
         //convert key to [UInt8]
         var decodedCENKeyAsUInt8Array: [UInt8] = []
@@ -37,7 +34,7 @@ class CenLogic {
 
         //convert timestamp to [UInt8]
         var tsAsUInt8Array: [UInt8] = []
-        [roundedTimestamp(ts: currentTs)].withUnsafeBytes {
+        [roundedTimestamp(ts: timestamp, roundingInterval: CENLifetimeInSeconds)].withUnsafeBytes {
             tsAsUInt8Array.append(contentsOf: $0)
         }
 
@@ -56,21 +53,28 @@ class CenLogic {
         }
     }
 
-    private func computeSymmetricKey() -> String {
-        var keyData = Data(count: 32) // 32 bytes === 256 bits
+    private func computeSymmetricKey() -> Result<String, CenLogicError> {
+        var keyData = Data(count: 32)
         let keyDataCount = keyData.count
         let result = keyData.withUnsafeMutableBytes {
             (mutableBytes: UnsafeMutablePointer) -> Int32 in
             SecRandomCopyBytes(kSecRandomDefault, keyDataCount, mutableBytes)
         }
         if result == errSecSuccess {
-            return keyData.base64EncodedString()
+            return .success(keyData.toHex())
         } else {
-            return ""
+            return .failure(.couldNotComputeKey)
         }
     }
 
-    private func roundedTimestamp(ts : Int64) -> Int64 {
-        Int64(ts / CENKeyLifetimeInSeconds) * CENKeyLifetimeInSeconds
+    private func roundedTimestamp(ts : Int64, roundingInterval: Int64) -> Int64 {
+        let mod = ts % roundingInterval
+        let roundedTimestamp = ts - mod
+        return roundedTimestamp
     }
 }
+
+public enum CenLogicError: Error {
+    case couldNotComputeKey
+}
+

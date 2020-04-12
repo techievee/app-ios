@@ -1,11 +1,16 @@
 import Foundation
 
-struct CEN: Codable {
-    let CEN: String
+struct CEN: Codable, CustomStringConvertible {
+    let CEN: String // Hex encoded
     let timestamp: Int64
 
-    init(CEN: String, timestamp: Int64 = Int64(Date().timeIntervalSince1970)) {
+    init(CEN: String, timestamp: Int64 = Date().coEpiTimestamp) {
         self.CEN = CEN
         self.timestamp = timestamp
+    }
+
+    var description: String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        return "CEN: \(CEN), time: \(date)"
     }
 }

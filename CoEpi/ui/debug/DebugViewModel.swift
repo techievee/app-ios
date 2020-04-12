@@ -6,74 +6,60 @@ class DebugViewModel {
 
     let debugEntries: Driver<[DebugEntryViewData]>
 
-    init(peripheral: PeripheralReactive, central: CentralReactive, api: Api) {
+    private let disposeBag = DisposeBag()
 
-
-        //TESTING NETWORK
-        print ("Testing Networking at lines 14 - 21 in DebugViewModel.swift")
-        api.getCenKeys()
-            .subscribe { print($0) }
-        
-        api.getCenReport(cenKey: CENKey(cenKey: "17FA287EBE6B42A3859A60C12CF71394"))
-            .subscribe { print($0) }
-
-        api.postCenReport(cenReport: CENReport(id: "80d2910e783ab87837b444c224a31c9745afffaaacd4fb6eacf233b5f30e3140", report: "c2V2ZXJlIGZldmVyLGNvdWdoaW5nLGhhcmQgdG8gYnJlYXRoZQ==", timestamp: Int64(Date().timeIntervalSince1970)))
-            .subscribe { print($0) }
-        //TESTING NETWORK
-         
-
-        let receivedContacts = central
-            .centralContactReceived
+    init(bleAdapter: BleAdapter, cenKeyDao: CENKeyDao, api: CoEpiApi) {
+        let myKey = cenKeyDao.generatedMyKey
             .scan([]) { acc, element in acc + [element] }
 
-        let discovered = central
-            .discovery
+        let myCen = bleAdapter.myCen
+            .scan([]) { acc, element in acc + [element] }
+
+        let discovered = bleAdapter.discovered
+            .scan([]) { acc, element in acc + [element] }
+
+        let peripheralWasRead = bleAdapter.peripheralWasRead
+            .scan([]) { acc, element in acc + [element] }
+
+        let centralDidWrite = bleAdapter.centralDidWrite
+            .scan([]) { acc, element in acc + [element] }
+
+        let peripheralWasWrittenTo = bleAdapter.peripheralWasWrittenTo
             .scan([]) { acc, element in acc + [element] }
 
         let combined = Observable.combineLatest(
-            peripheral
-                .peripheralState
-                .map { Optional($0) }
-                .startWith(nil),
-
-            peripheral.didReadCharacteristic
-                .map { Optional($0) }
-                .startWith(nil),
-
-            receivedContacts
-                .startWith([]),
-
-            discovered
-                .startWith([])
+            myKey.startWith([]),
+            myCen.startWith([]),
+            discovered.startWith([]),
+            peripheralWasRead.startWith([]),
+            centralDidWrite.startWith([]),
+            peripheralWasWrittenTo.startWith([])
         )
 
         debugEntries = combined
-            .map { peripheralState, didReadCharacteristic, receivedContacts, discovered in
-                let peripheralState = peripheralState ?? ""
-                let didReadCharacteristic: String = didReadCharacteristic?.ourIdentifier ?? "None"
-                return [
-                    .Header("Peripheral state"),
-                    .Item(peripheralState),
-                    .Header("Contact sent"),
-                    .Item(didReadCharacteristic),
-                    .Header("Received contacts")]
-                    + receivedContacts.map{
-                        .Item($0.theirIdentifier)
-                    }
-                    + [.Header("Discovered devices")]
-                    + discovered.map{ .Item($0.debugIdentifier) }
+            .map { myKey, myCen, discovered, peripheralWasRead, centralDidWrite, peripheralWasWrittenTo in
+                return generateItems(myKey: myKey, myCen: myCen, discovered: discovered, peripheralWasRead: peripheralWasRead,
+                                     centralDidWrite: centralDidWrite, peripheralWasWrittenTo: peripheralWasWrittenTo)
             }
             .asDriver(onErrorJustReturn: [])
-    }
-}
-
-private extension DetectedPeripheral {
-    var debugIdentifier: String {
-        (name.map { "\($0), " } ?? "") + uuid.uuidString
     }
 }
 
 enum DebugEntryViewData {
     case Header(String)
     case Item(String)
+}
+
+private func generateItems(myKey: [String], myCen: [String], discovered: [CEN], peripheralWasRead: [String],
+                           centralDidWrite: [String], peripheralWasWrittenTo: [String]) -> [DebugEntryViewData] {
+    return items(header: "My key", items: myKey)
+        + items(header: "My CEN", items: myCen)
+        + items(header: "Discovered", items: discovered.map{ $0.CEN })
+        + items(header: "Peripheral was read", items: peripheralWasRead)
+        + items(header: "Central did write", items: centralDidWrite)
+        + items(header: "Peripheral was written to", items: peripheralWasWrittenTo)
+}
+
+private func items(header: String, items: [String]) -> [DebugEntryViewData] {
+    [.Header(header)] + items.map{ .Item($0) }
 }

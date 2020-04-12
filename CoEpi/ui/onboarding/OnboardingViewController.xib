@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Light.ttf">
+            <string>Roboto-Light</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="CoEpi" customModuleProvider="target">
             <connections>
@@ -26,11 +35,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJ3-Jg-Lty">
-                    <rect key="frame" x="258" y="827" width="124" height="27"/>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                    <rect key="frame" x="265" y="827" width="117" height="27"/>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                     <state key="normal" title="How is my data used?">
                         <color key="titleColor" name="CoEpiUnderlineButton"/>
                     </state>
+                    <connections>
+                        <action selector="howDataUsedClick:" destination="-1" eventType="touchUpInside" id="l0m-DN-SA0"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B2r-er-WZN">
                     <rect key="frame" x="32" y="374.5" width="350" height="252"/>
@@ -59,7 +71,7 @@
                     <rect key="frame" x="32" y="658.5" width="350" height="160"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fr7-Sv-VLe" customClass="OnboardingButton" customModule="CoEpi" customModuleProvider="target">
-                            <rect key="frame" x="130.5" y="0.0" width="89" height="50.5"/>
+                            <rect key="frame" x="130.5" y="0.0" width="89" height="55.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="50" id="D1s-qm-CFW"/>
                             </constraints>
@@ -70,8 +82,8 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collaborate. Inform. Protect." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Pn-8z-i4x">
-                            <rect key="frame" x="0.0" y="82.5" width="350" height="77.5"/>
-                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="29"/>
+                            <rect key="frame" x="15" y="87.5" width="320" height="72.5"/>
+                            <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="26"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>

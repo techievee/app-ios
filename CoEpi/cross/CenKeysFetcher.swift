@@ -3,11 +3,10 @@ import RxSwift
 import os.log
 
 class CenKeysFetcher {
-    private let api: Api
+    private let api: CoEpiApi
 
     lazy var keys: Observable<[CENKey]> = Observable<Int>
-        // TODO 10 secs just for testing
-        .timer(.seconds(0), period: .seconds(60), scheduler: MainScheduler.instance)
+        .timer(.seconds(0), period: .seconds(3600), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
         .flatMapLatest { [api] _ in
             api.getCenKeys()
         }
@@ -15,7 +14,7 @@ class CenKeysFetcher {
             strings.map { CENKey(cenKey: $0) }
         }
 
-    init(api: Api) {
+    init(api: CoEpiApi) {
         self.api = api
     }
 }

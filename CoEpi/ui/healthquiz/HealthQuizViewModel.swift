@@ -1,18 +1,23 @@
 import Dip
 import RxCocoa
 import RxSwift
+import RxSwiftExt
+import os.log
 
-class HealthQuizViewModel {
+class HealthQuizViewModel: UINotifier {
+    let rxQuestions: Driver<[Question]>
+    let notification: Driver<UINotification>
+
+    let notificationSubject: PublishRelay<UINotification> = PublishRelay()
+
     weak var delegate: HealthQuizViewModelDelegate?
 
     private let symptomRepo: SymptomRepo
     private let questionsRelay: BehaviorRelay<[Question]>
 
-    private(set) var rxQuestions: Driver<[Question]>
-
     private let submitTrigger: PublishRelay<Void> = PublishRelay()
 
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
 
     init(container: DependencyContainer) {
         self.symptomRepo = try! container.resolve()
@@ -21,6 +26,9 @@ class HealthQuizViewModel {
 
         rxQuestions = questionsRelay
             .asDriver(onErrorJustReturn: [])
+
+        notification = notificationSubject
+            .asDriver(onErrorDriveWith: .empty())
 
         observeSubmit()
     }
@@ -46,14 +54,18 @@ class HealthQuizViewModel {
                 .map { $0.toSymptom() }
             }
 
-        submitTrigger.withLatestFrom(selectedSymptoms)
-            .flatMap { [symptomRepo] (symptoms: [Symptom]) in
-                symptomRepo.submitSymptoms(symptoms: symptoms).andThen(Observable.just(()))
+        let events: Observable<Event<()>> = submitTrigger.withLatestFrom(selectedSymptoms)
+            .flatMap { [symptomRepo] symptoms in
+                symptomRepo.submitSymptoms(symptoms: symptoms)
+                    .materialize()
             }
-            .subscribe(onNext: { [weak self] in
-                self?.delegate?.onSubmit()
-            })
-            .disposed(by: disposeBag)
+            .share()
+
+        events.elements().subscribe(onNext: { [weak self] success in
+            self?.delegate?.onSubmit()
+        }).disposed(by: disposeBag)
+
+        bindSuccessErrorNotifier(events, successMessage: "Symptoms submitted!")
     }
 }
 

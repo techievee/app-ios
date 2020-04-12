@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class HealthQuizViewController: UIViewController {
+class HealthQuizViewController: UIViewController, ErrorDisplayer {
     private let viewModel: HealthQuizViewModel
     private let dataSource: HealthQuizQuestionsDataSource = .init()
 
@@ -23,9 +23,29 @@ class HealthQuizViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func share() {
+        Sharer().share(viewController: self, completion: { [weak self] in
+            self?.viewModel.onTapSubmit()
+        })
+    }
 
+    private func showAlert() {
+        ConfirmationAlert().show(on: self,
+                                 title: "Thank you for reporting your symptoms",
+                                 message: "Please share this app so we can stop the spread of Covid-19",
+                                 yesText: "Share",
+                                 noText: "Don't Share",
+                                 yesAction: { [weak self] in
+                                    self?.share()
+                                 },
+                                 noAction: { [weak self] in
+                                    self?.viewModel.onTapSubmit()
+                                 })
+    }
+    
     @IBAction func submit(_ sender: UIButton) {
-        viewModel.onTapSubmit()
+        showAlert()
     }
 
     override func viewDidLoad() {
@@ -33,6 +53,10 @@ class HealthQuizViewController: UIViewController {
 
         viewModel.rxQuestions
             .drive(questionList.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.notification
+            .drive(rx.notification)
             .disposed(by: disposeBag)
      }
 }

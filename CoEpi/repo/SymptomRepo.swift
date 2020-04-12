@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import os.log
 
 protocol SymptomRepo {
     func symptoms() -> [Symptom]
@@ -33,14 +34,20 @@ class SymptomRepoImpl: SymptomRepo {
     }
 
     func submitSymptoms(symptoms: [Symptom]) -> Completable {
-        coEpiRepo.sendReport(report: symptoms.toCENReport())
+        if let cenReport = symptoms.toCENReport() {
+            return coEpiRepo.sendReport(report: cenReport)
+        } else {
+            os_log("Couldn't encode symptoms: %@ to Base64", log: servicesLog, type: .debug, "\(symptoms)")
+            return Completable.error(RepoError.unknown)
+        }
     }
 }
 
 private extension Sequence where Iterator.Element == Symptom {
-
-    func toCENReport() -> CENReport {
-        // TODO
-        CENReport(id: "123", report: "TODO symptoms -> CENReport", timestamp: Int64(Date().timeIntervalSince1970))
+    func toCENReport() -> CenReport? {
+        let separator = ", "
+        let stringReport : String  = self.reduce("") {$0 + $1.name + separator}
+        let cs = CharacterSet.init(charactersIn: separator)
+        return CenReport(id: UUID().uuidString, report: stringReport.trimmingCharacters(in: cs), timestamp: Date().coEpiTimestamp)
     }
 }

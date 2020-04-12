@@ -1,7 +1,8 @@
 import Foundation
+import os.log
 
 // TODO review CEN refresh logic. Is it on each read or with a timer?
-class ContactReceivedHandler: PeripheralRequestHandler {
+class ContactReceivedHandler {
 
     private let cenKeyRepo: CENKeyRepo
     private let cenLogic: CenLogic
@@ -11,12 +12,27 @@ class ContactReceivedHandler: PeripheralRequestHandler {
         self.cenLogic = cenLogic
     }
 
-    func onReceivedRequest(request: Data?, respondClosure: (Data) -> ()) {
-        let currentCENKey = cenKeyRepo.generateAndStoreCENKey()
-        let CENData: Data = cenLogic.generateCen(CENKey: currentCENKey.cenKey)
-        //*** Scenario 1: https://docs.google.com/document/d/1f65V3PI214-uYfZLUZtm55kdVwoazIMqGJrxcYNI4eg/edit#
-        // iOS - Central + iOS - Peripheral -- so commenting out addNewContact
-        //addNewContactEvent(with: identifier)
-        respondClosure(CENData)
+    // TODO review CEN generation timing
+    func provideMyCen() -> Data {
+        switch cenKeyRepo.generateAndStoreCENKey() {
+        case .success(let key):
+            let cen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: Date().coEpiTimestamp)
+            os_log("Generated my CEN: %@ with key: %@", log: servicesLog, cen.toHex(), "\(key.cenKey)")
+            return cen
+            //*** Scenario 1: https://docs.google.com/document/d/1f65V3PI214-uYfZLUZtm55kdVwoazIMqGJrxcYNI4eg/edit#
+            // iOS - Central + iOS - Peripheral -- so commenting out addNewContact
+            //addNewContactEvent(with: identifier)
+
+        case .failure(let error):
+            os_log("Couldn't generate CEN key: %@", type: .error, "\(error)")
+            // TODO clarify with BT lib how to handle error.
+            // In this case lib probably should handle optional result (do nothing if it's not set)
+            // or maybe use callback
+            return Data()
+        }
+    }
+
+    func provideMyCenAsync(respondClosure: (Data) -> ()) {
+        respondClosure(provideMyCen())
     }
 }
