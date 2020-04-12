@@ -9,6 +9,10 @@ protocol CenMatcher {
 class CenMatcherImpl: CenMatcher {
     private let cenRepo: CENRepo // TODO decouple from DB
     private let cenLogic: CenLogic
+    
+    var matchedKeys : [CENKey] = []
+    
+    private let matchingQueue = DispatchQueue(label: "org.coepi.matchingQueue", attributes: .concurrent)
 
     init(cenRepo: CENRepo, cenLogic: CenLogic) {
         self.cenRepo = cenRepo
@@ -29,27 +33,48 @@ class CenMatcherImpl: CenMatcher {
         let localCens: [CEN] = cenRepo.loadCensForTimeInterval(start: minTimestamp, end: maxTimestamp)
         os_log("Count of local CENs = %d", localCens.count)
         
-        var matchedKeys : [CENKey] = []
+        let group: DispatchGroup = DispatchGroup()
+        let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
         
         for localCen in localCens {
-            let mod = localCen.timestamp % Int64(CenLogic.CENLifetimeInSeconds)
-            let roundedLocalTimestamp = localCen.timestamp - mod
-            os_log("Local CEN: cen = [ %@ ], timestamp = [ %lld ], rounded timestamp = [ %lld ]", localCen.CEN, localCen.timestamp, roundedLocalTimestamp)
-            var i : Int = 0
-            for key in keys {
-                i+=1
-                let candidateCen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: roundedLocalTimestamp)
-                let candidateCenHex = candidateCen.toHex()
-                os_log("%d. candidateCenHex: [%@] based on key [%@ %lld] \n", i, candidateCenHex, key.cenKey, key.timestamp  )
-                if localCen.CEN == candidateCenHex {
-                    os_log("Match found for [%@]", candidateCenHex)
-                    matchedKeys.append(key)
-                    break
-                }
-                
+            
+            group.enter()
+            matchingQueue.async {
+                self.checkInfection(localCen: localCen, keys: keys){group.leave()}
             }
+            
         }
+        group.notify(queue: DispatchQueue.main){
+            os_log("Notified!")
+            semaphore.signal()
+        }
+        semaphore.wait()
+        
         return matchedKeys
+        
+    }
+    
+    private func checkInfection(localCen: CEN, keys: [CENKey], completion: () -> Void){
+        let mod = localCen.timestamp % Int64(CenLogic.CENLifetimeInSeconds)
+        let roundedLocalTimestamp = localCen.timestamp - mod
+        os_log("Local CEN: cen = [ %@ ], timestamp = [ %lld ], rounded timestamp = [ %lld ]", localCen.CEN, localCen.timestamp, roundedLocalTimestamp)
+        var i : Int = 0
+        for key in keys {
+            i+=1
+            let candidateCen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: roundedLocalTimestamp)
+            let candidateCenHex = candidateCen.toHex()
+            os_log("%p %d. candidateCenHex: [%@] based on key [%@ %lld] \n", Thread.current, i, candidateCenHex, key.cenKey, key.timestamp)
+            if localCen.CEN == candidateCenHex {
+                os_log("Match found for [%@]", candidateCenHex)
+                DispatchQueue.main.async{
+                    self.matchedKeys.append(key)
+                }
+                break
+            }
+            
+        }
+        
+        completion()
     }
 
     // Copied from Android implementation
