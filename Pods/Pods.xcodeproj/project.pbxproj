@@ -16,6 +16,7 @@
 				AAAF8DBEC5B859DBF7763CAABE58A437 /* PBXTargetDependency */,
 			);
 			name = AppCenter;
+			productName = AppCenter;
 		};
 /* End PBXAggregateTarget section */
 
@@ -87,30 +88,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00FE20C5D75E7F2D7C227086BA92E5C1 /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = de.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/de.lproj"; sourceTree = "<group>"; };
+		00FE20C5D75E7F2D7C227086BA92E5C1 /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = de.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/de.lproj"; sourceTree = "<group>"; };
 		1075B0A83577A7BE4E65E98994F05788 /* Pods-CoEpiTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CoEpiTests-dummy.m"; sourceTree = "<group>"; };
-		10C0115C74356EF1CBCD497BC49C9520 /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hant.lproj"; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/zh-Hant.lproj"; sourceTree = "<group>"; };
-		11AF731E4071DCD5E34B4CA294302B92 /* AppCenterDistributeResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = AppCenterDistributeResources.bundle; path = "AppCenter-AppCenterDistributeResources.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		10C0115C74356EF1CBCD497BC49C9520 /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hant.lproj"; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/zh-Hant.lproj"; sourceTree = "<group>"; };
+		11AF731E4071DCD5E34B4CA294302B92 /* AppCenterDistributeResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppCenterDistributeResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		14579764C0E5463DAF23700C38194AC1 /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = "AppCenter-SDK-Apple/iOS/AppCenter.framework"; sourceTree = "<group>"; };
 		19A19D8182B2471AA884AA8B1BB6F090 /* Pods-CoEpi-CoEpiUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CoEpi-CoEpiUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1AA2C0EC98CE898D11393D654968C10E /* AppCenter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AppCenter.debug.xcconfig; sourceTree = "<group>"; };
 		311E677EE021657DD2F9487B36A86BBF /* Pods-CoEpiTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpiTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3373F6568F4739AA4745CCB535ED150E /* Pods-CoEpi-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpi-Info.plist"; sourceTree = "<group>"; };
-		36C548E00D242FFFEC1F7B642FDA196A /* cs.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = cs.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/cs.lproj"; sourceTree = "<group>"; };
+		36C548E00D242FFFEC1F7B642FDA196A /* cs.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = cs.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/cs.lproj"; sourceTree = "<group>"; };
 		37F0535519D5A774B8CD61331E172FEC /* Pods-CoEpiNetworkingTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CoEpiNetworkingTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		3820C245AB27A3F096602AB3B921D3CE /* Pods-CoEpiTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CoEpiTests-umbrella.h"; sourceTree = "<group>"; };
 		3A93389F2BD419000D0D48DEFB205C05 /* Pods-CoEpiNetworkingTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpiNetworkingTests-Info.plist"; sourceTree = "<group>"; };
-		3E8D4B548251A691710A2DFE184B019A /* Pods_CoEpiNetworkingTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CoEpiNetworkingTests.framework; path = "Pods-CoEpiNetworkingTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E8D4B548251A691710A2DFE184B019A /* Pods_CoEpiNetworkingTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoEpiNetworkingTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F6DCC6D91501567BCEF416D98FD8BB /* Pods-CoEpi-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CoEpi-umbrella.h"; sourceTree = "<group>"; };
-		4C677B55A0F7648C40664E9A6B242D19 /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pl.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/pl.lproj"; sourceTree = "<group>"; };
+		4C677B55A0F7648C40664E9A6B242D19 /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = pl.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/pl.lproj"; sourceTree = "<group>"; };
 		5345F332D82683E6E0320D07A5684D63 /* AppCenterDistribute.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterDistribute.framework; path = "AppCenter-SDK-Apple/iOS/AppCenterDistribute.framework"; sourceTree = "<group>"; };
 		54EFC5CA21FC0BB5CC1EBD0CB6F2E55A /* Pods-CoEpiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpiTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5787FD7A9F1E30C36537674229229181 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ja.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/ja.lproj"; sourceTree = "<group>"; };
+		5787FD7A9F1E30C36537674229229181 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/ja.lproj"; sourceTree = "<group>"; };
 		6050C189C580897593BE15119B3623B4 /* Pods-CoEpi-CoEpiUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CoEpi-CoEpiUITests-dummy.m"; sourceTree = "<group>"; };
-		60D5E25FFF7F491B7788FF74C59108AE /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pt.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/pt.lproj"; sourceTree = "<group>"; };
-		6BD0A3A76351562B97AEE1238FC931F4 /* Pods_CoEpi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CoEpi.framework; path = "Pods-CoEpi.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F01A0AEA3AF5A6E160D6500E68D436E /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ru.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/ru.lproj"; sourceTree = "<group>"; };
+		60D5E25FFF7F491B7788FF74C59108AE /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = pt.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/pt.lproj"; sourceTree = "<group>"; };
+		6BD0A3A76351562B97AEE1238FC931F4 /* Pods_CoEpi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoEpi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F01A0AEA3AF5A6E160D6500E68D436E /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ru.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/ru.lproj"; sourceTree = "<group>"; };
 		70BD7FC299910B0C94503B785D66A4BC /* Pods-CoEpi-CoEpiUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CoEpi-CoEpiUITests-resources.sh"; sourceTree = "<group>"; };
 		728CEA1B6CCB88770B27358302119190 /* ResourceBundle-AppCenterDistributeResources-AppCenter-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-AppCenterDistributeResources-AppCenter-Info.plist"; sourceTree = "<group>"; };
 		867A812CBE5430666207146D66534445 /* Pods-CoEpi-CoEpiUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpi-CoEpiUITests-Info.plist"; sourceTree = "<group>"; };
@@ -121,32 +122,32 @@
 		93520B1E952F4FBF8821AD0F7A3C0FD4 /* Pods-CoEpi-CoEpiUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CoEpi-CoEpiUITests-umbrella.h"; sourceTree = "<group>"; };
 		95A7F1C509F17E036F013033C182072D /* Pods-CoEpi-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CoEpi-resources.sh"; sourceTree = "<group>"; };
 		9833A3C680FC7EE3DE2B7288C4AC574A /* Pods-CoEpi-CoEpiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpi-CoEpiUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		ACF401945B4C3FD0EC55B6D853DFC911 /* Pods-CoEpiNetworkingTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CoEpiNetworkingTests.modulemap"; sourceTree = "<group>"; };
 		B0C788745A387993B747D366E937C69F /* Pods-CoEpi.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CoEpi.modulemap"; sourceTree = "<group>"; };
 		B4F9392884D928133C082D506DB521E9 /* Pods-CoEpiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpiTests.release.xcconfig"; sourceTree = "<group>"; };
 		B6376C962D81C25A357188CADC6A1B15 /* Pods-CoEpiNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpiNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA90D66DEB8F4B86D2B67BDBEBE1FF6E /* Pods-CoEpi-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpi-acknowledgements.plist"; sourceTree = "<group>"; };
-		D15CDC1F096F3ACF5A81C89C1879DC27 /* Pods_CoEpi_CoEpiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CoEpi_CoEpiUITests.framework; path = "Pods-CoEpi-CoEpiUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D48C7EF855840833769CB5E6467F9A4B /* tr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = tr.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/tr.lproj"; sourceTree = "<group>"; };
+		D15CDC1F096F3ACF5A81C89C1879DC27 /* Pods_CoEpi_CoEpiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoEpi_CoEpiUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D48C7EF855840833769CB5E6467F9A4B /* tr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = tr.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/tr.lproj"; sourceTree = "<group>"; };
 		D49995790EE8CCEEBB1EE7C993CB7152 /* Pods-CoEpi-CoEpiUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CoEpi-CoEpiUITests.modulemap"; sourceTree = "<group>"; };
-		D7C8E71EB21B8E065A23D241B640F8A0 /* ko.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ko.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/ko.lproj"; sourceTree = "<group>"; };
+		D7C8E71EB21B8E065A23D241B640F8A0 /* ko.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ko.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/ko.lproj"; sourceTree = "<group>"; };
 		D84361F2758D4CF6D3C07A48374BB97E /* Pods-CoEpiNetworkingTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpiNetworkingTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		D897AFB43DCFD0270BF8292316078645 /* Pods-CoEpi-CoEpiUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpi-CoEpiUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		D972960055993AF1FB845F7E0E9092F0 /* Pods-CoEpi-CoEpiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpi-CoEpiUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D9FDC750BF89EA2F0E41924883046B17 /* Pods-CoEpi-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CoEpi-dummy.m"; sourceTree = "<group>"; };
 		DAF12BCB68EDC4538CB78DEC56A82C80 /* Pods-CoEpiTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoEpiTests-Info.plist"; sourceTree = "<group>"; };
-		DC9826EA2AF29B936EF9A8E82E28C057 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/es.lproj"; sourceTree = "<group>"; };
+		DC9826EA2AF29B936EF9A8E82E28C057 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = es.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/es.lproj"; sourceTree = "<group>"; };
 		DECABE1C56F9FEFFDD6AA9217130FC2A /* AppCenter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AppCenter.release.xcconfig; sourceTree = "<group>"; };
 		E67091BF89407D2DCD683E84E59C4E6E /* Pods-CoEpiNetworkingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpiNetworkingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED1277148595AA86B311680EB5CAD28C /* Pods-CoEpi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoEpi.debug.xcconfig"; sourceTree = "<group>"; };
 		F2EFACF40F92F24D284E7AA7D8E5761E /* Pods-CoEpiTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CoEpiTests.modulemap"; sourceTree = "<group>"; };
 		F2F0FEE0BF8D2BEB0D30E4CD613AE965 /* Pods-CoEpiNetworkingTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CoEpiNetworkingTests-dummy.m"; sourceTree = "<group>"; };
-		F4A51476AE55F70BDAF01F0D1E415148 /* Pods_CoEpiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CoEpiTests.framework; path = "Pods-CoEpiTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F516BFFB1D02D05E5DDB0DF38DCB3A46 /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = it.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/it.lproj"; sourceTree = "<group>"; };
-		F5BBBA20F7E7CA92FA199CD0C99EA4F6 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fr.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/fr.lproj"; sourceTree = "<group>"; };
-		FA1E8DF9885B617A0C554D6C02C89B25 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/en.lproj"; sourceTree = "<group>"; };
-		FF3AD76CDDF043D14B0523D03AC26018 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hans.lproj"; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/zh-Hans.lproj"; sourceTree = "<group>"; };
+		F4A51476AE55F70BDAF01F0D1E415148 /* Pods_CoEpiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoEpiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F516BFFB1D02D05E5DDB0DF38DCB3A46 /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = it.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/it.lproj"; sourceTree = "<group>"; };
+		F5BBBA20F7E7CA92FA199CD0C99EA4F6 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = fr.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/fr.lproj"; sourceTree = "<group>"; };
+		FA1E8DF9885B617A0C554D6C02C89B25 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/en.lproj"; sourceTree = "<group>"; };
+		FF3AD76CDDF043D14B0523D03AC26018 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hans.lproj"; path = "AppCenter-SDK-Apple/iOS/AppCenterDistributeResources.bundle/zh-Hans.lproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,7 +247,6 @@
 				5196F09EFE4A50FF6F0BDB4D19956EAC /* Distribute */,
 				0CD2C558F23D2EF6B58F62F076B921A1 /* Support Files */,
 			);
-			name = AppCenter;
 			path = AppCenter;
 			sourceTree = "<group>";
 		};
