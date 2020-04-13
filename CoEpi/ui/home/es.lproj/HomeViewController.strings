@@ -1,0 +1,21 @@
+
+/* Class = "UILabel"; text = "Build"; ObjectID = "0sB-oG-nLH"; */
+"0sB-oG-nLH.text" = "Construir";
+
+/* Class = "UILabel"; text = "Contact Alerts"; ObjectID = "1H3-EG-gYR"; */
+"1H3-EG-gYR.text" = "Alertas de Contacto";
+
+/* Class = "UILabel"; text = "My Health"; ObjectID = "PKZ-Mp-cvR"; */
+"PKZ-Mp-cvR.text" = "Mi Salud";
+
+/* Class = "UIButton"; normalTitle = "CHECK-IN"; ObjectID = "ctf-a4-WBU"; */
+"ctf-a4-WBU.normalTitle" = "REGISTRARSE";
+
+/* Class = "UIButton"; normalTitle = "Debug"; ObjectID = "sbH-Ss-34p"; */
+"sbH-Ss-34p.normalTitle" = "Depurar";
+
+/* Class = "UIButton"; normalTitle = "SEE ALERTS"; ObjectID = "wu4-6I-1eQ"; */
+"wu4-6I-1eQ.normalTitle" = "VER ALERTAS";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "wxx-IU-WaY"; */
+"wxx-IU-WaY.text" = "Versión";

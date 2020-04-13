@@ -1,0 +1,6 @@
+
+/* Class = "UILabel"; text = "Are you experiencing any of the following symptoms?"; ObjectID = "foP-il-DcM"; */
+"foP-il-DcM.text" = "¿Experimenta alguno de los siguientes síntomas?";
+
+/* Class = "UIButton"; normalTitle = "SUBMIT"; ObjectID = "tIo-kZ-PQ7"; */
+"tIo-kZ-PQ7.normalTitle" = "SUBMIT";
