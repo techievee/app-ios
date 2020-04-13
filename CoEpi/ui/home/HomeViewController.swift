@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
 
         paragraphStyle.lineHeightMultiple = 1.07
         
-        let share = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(share(sender:)))
+        let share = UIBarButtonItem(title: NSLocalizedString("home.share", value: "Share", comment: "Tell a friend about CoEpi"), style: .plain, target: self, action: #selector(share(sender:)))
         share.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = share
         
@@ -50,11 +50,11 @@ class HomeViewController: UIViewController {
         myHealthDescriptionLabel.lineBreakMode = .byWordWrapping
         myHealthDescriptionLabel.sizeToFit()
         
-        myHealthDescriptionLabel.attributedText = NSMutableAttributedString(string: "Monitor your health and report symptoms.", attributes: [NSAttributedString.Key.kern: 0.25, NSAttributedString.Key.paragraphStyle: paragraphStyle ])
+        myHealthDescriptionLabel.attributedText = NSMutableAttributedString(string: NSLocalizedString("home.myHealth.description", value: "Monitor your health and report symptoms.", comment: "button description"), attributes: [NSAttributedString.Key.kern: 0.25, NSAttributedString.Key.paragraphStyle: paragraphStyle ])
         
         contactAlertsDescriptionLabel.numberOfLines = 0
         contactAlertsDescriptionLabel.lineBreakMode = .byWordWrapping
-        contactAlertsDescriptionLabel.attributedText = NSMutableAttributedString(string: "Approximate times that you may have been exposed to a symptomatic individual", attributes: [NSAttributedString.Key.kern: 0.25, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        contactAlertsDescriptionLabel.attributedText = NSMutableAttributedString(string: NSLocalizedString("home.contactAlerts.description", value: "Approximate times that you may have been exposed to a symptomatic individual", comment: "button description"), attributes: [NSAttributedString.Key.kern: 0.25, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         configureCardView(cardView: self.stackContainerView)
         configureCardView(cardView: self.stackContainerViewTwo)
         

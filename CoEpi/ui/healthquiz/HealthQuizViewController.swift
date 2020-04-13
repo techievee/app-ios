@@ -13,7 +13,7 @@ class HealthQuizViewController: UIViewController, ErrorDisplayer {
     init(viewModel: HealthQuizViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: Self.self), bundle: nil)
-        title = "My Health"
+        title = NSLocalizedString("healthquiz.title", value: "My Health", comment: "Page title")
         
         dataSource.onChecked = { (question, idx) in
             viewModel.handleAnswer(question: question, idx: idx)

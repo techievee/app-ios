@@ -1,4 +1,5 @@
 import Dip
+import UIKit
 import RxCocoa
 import RxSwift
 
@@ -20,7 +21,7 @@ class AlertsViewModel {
     }
 
     private static func formatTitleLabel(count: Int) -> String {
-        let title: String = "\(count) new contact alert"
+        let title: String = "\(count) " + NSLocalizedString("alerts.count.units", value: "new contact alert", comment: "Units for counting how many alerts")
         
         if count < 2 {
             return title
