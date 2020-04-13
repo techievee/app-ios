@@ -25,47 +25,47 @@ class CenMatcherImpl: CenMatcher {
     
     func matchLocalFirst(keys: [CENKey], maxTimestamp: Int64) -> [CENKey] {
         let modulus = maxTimestamp % Int64(CenLogic.CENLifetimeInSeconds)
-        
         let roundedMaxTimestamp = maxTimestamp - modulus
         let minTimestamp: Int64 = roundedMaxTimestamp - 7*24*60*60
         
-        
         let localCens: [CEN] = cenRepo.loadCensForTimeInterval(start: minTimestamp, end: maxTimestamp)
-        os_log("Count of local CENs = %d", localCens.count)
+        os_log("Count of local CENs = %{PUBLIC}d", localCens.count)
         
-        let group: DispatchGroup = DispatchGroup()
-        let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+        let concurentMatchingGroup: DispatchGroup = DispatchGroup()
+        let matchingIsCompleteSemaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
         
         for localCen in localCens {
-            
-            group.enter()
+            concurentMatchingGroup.enter()
             matchingQueue.async {
-                self.checkInfection(localCen: localCen, keys: keys){group.leave()}
+                self.checkForPotentialInfection(cen: localCen, infectedKeys: keys){concurentMatchingGroup.leave()}
             }
-            
         }
-        group.notify(queue: DispatchQueue.main){
-            os_log("Notified!")
-            semaphore.signal()
+        concurentMatchingGroup.notify(queue: DispatchQueue.main){
+            //All matching batches are done
+            os_log("Matching is completed!")
+            matchingIsCompleteSemaphore.signal()
         }
-        semaphore.wait()
+        
+        //BLock execution untill all matching batches are done
+        matchingIsCompleteSemaphore.wait()
         
         return matchedKeys
         
     }
     
-    private func checkInfection(localCen: CEN, keys: [CENKey], completion: () -> Void){
-        let mod = localCen.timestamp % Int64(CenLogic.CENLifetimeInSeconds)
-        let roundedLocalTimestamp = localCen.timestamp - mod
-        os_log("Local CEN: cen = [ %@ ], timestamp = [ %lld ], rounded timestamp = [ %lld ]", localCen.CEN, localCen.timestamp, roundedLocalTimestamp)
+    private func checkForPotentialInfection(cen: CEN, infectedKeys: [CENKey], completion: () -> Void){
+        let mod = cen.timestamp % Int64(CenLogic.CENLifetimeInSeconds)
+        let roundedLocalTimestamp = cen.timestamp - mod
+        os_log("Local CEN: cen = [ %@ ], timestamp = [ %lld ], rounded timestamp = [ %lld ]", cen.CEN, cen.timestamp, roundedLocalTimestamp)
         var i : Int = 0
-        for key in keys {
+        for key in infectedKeys {
             i+=1
             let candidateCen = cenLogic.generateCen(CENKey: key.cenKey, timestamp: roundedLocalTimestamp)
             let candidateCenHex = candidateCen.toHex()
             os_log("%p %d. candidateCenHex: [%@] based on key [%@ %lld] \n", Thread.current, i, candidateCenHex, key.cenKey, key.timestamp)
-            if localCen.CEN == candidateCenHex {
-                os_log("Match found for [%@]", candidateCenHex)
+            if cen.CEN == candidateCenHex {
+                os_log("Match found for [%{PUBLIC}@]", candidateCenHex)
+                //Update matchedKeys on Main thread (preventing race conditions)
                 DispatchQueue.main.async{
                     self.matchedKeys.append(key)
                 }
@@ -73,7 +73,7 @@ class CenMatcherImpl: CenMatcher {
             }
             
         }
-        
+        //leave concurentMatchingGroup
         completion()
     }
 
